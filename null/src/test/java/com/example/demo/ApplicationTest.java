@@ -118,21 +118,30 @@ public class ApplicationTest {
         // Shtoni kontrollin e të dhënave të tjera të shërbimit nëse është e nevojshme
     }
 
-//    @Test
-//    public void testCreateContract() {
-//        // Krijo një objekt Contract për testim
-//        Contract contractDTO = new Contract();
-//        contractDTO.setContractType("type");
-//        contractDTO.setCreatedDate(new Date());
-//        contractDTO.setStatus("active");
-//        // Set other properties as needed...
-//
-//        // Thirr metoden createContract nga ContractController
-//        ResponseEntity<String> response = contractController.createContract(contractDTO);
-//
-//        // Testo përgjigjen e kthyer
-//        assertEquals(HttpStatus.CREATED, response.getStatusCode(), "Përgjigja e pritur nuk është e drejtë");
-//    }
+
+
+    @SpringBootTest
+    public class ContractControllerTest {
+
+        @Autowired
+        private ContractController contractController;
+
+        @Test
+        public void testCreateContract() {
+            Contract contract = new Contract();
+            contract.setContractType("type");
+            contract.setCreatedDate(new Date());
+            contract.setStatus("Active");
+
+            ResponseEntity<Contract> response = contractController.createContract(contract);
+
+            assertEquals(HttpStatus.CREATED, response.getStatusCode(), "Përgjigja e pritur nuk është e drejtë");
+
+            Contract createdContract = response.getBody();
+            assertNotNull(createdContract, "Kontrata nuk u krijua siç pritej");
+        }
+    }
+
     }
 
 
